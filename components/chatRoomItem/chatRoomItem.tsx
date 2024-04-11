@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: -5,
         top: -3,
-        backgroundColor: "#6750a5"
+        backgroundColor: "#6750a5" 
+
+        
     }
 })

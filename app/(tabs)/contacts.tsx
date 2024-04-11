@@ -1,31 +1,59 @@
-import { StyleSheet } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet,Button } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
+import { User } from '@/src/types';
+import UserItem from '@/components/UserItem';
 
 export default function TabTwoScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
-  );
+    const [Users, setUsers] = useState<User[]>([]);
+
+    const usersData = [{
+        username: "12",
+        url: "https://randomuser.me/api/portraits/men/36.jpg"
+    },
+    {
+        username: "2",
+        url: "https://randomuser.me/api/portraits/men/36.jpg"
+    },
+    {
+        username: "3",
+        url: "https://randomuser.me/api/portraits/men/36.jpg"
+    }]
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:3007/api/register', {
+            method: 'POST'
+        }).then(response => {
+            console.warn( response);
+            console.log(response);
+        });
+    })
+    function getData() {
+        fetch('http://127.0.0.1:3007/api/register', {
+            method: 'POST'
+        }).then(response => {
+            console.warn( response);
+            console.log(response);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+    return (
+        <View style={styles.container}>
+            <FlatList
+                data={usersData}
+                renderItem={({ item }) => <UserItem userItem={item} />}
+            />
+            <Button title="点击" onPress={getData}/>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
+    container: {
+        flex: 1,
+        padding: 15
+    }
 });
