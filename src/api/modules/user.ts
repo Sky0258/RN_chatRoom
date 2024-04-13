@@ -1,0 +1,1 @@
+export const reqUserList = () => fetch('http://127.0.0.1:3007/api/register', { method: 'POST'})

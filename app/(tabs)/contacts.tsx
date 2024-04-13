@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet,Button } from 'react-native';
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { FlatList, StyleSheet, Button, View } from 'react-native';
 import { User } from '@/src/types';
 import UserItem from '@/components/UserItem';
+import { reqUserList } from '@/src/api/modules/user';
 
 export default function TabTwoScreen() {
     const [Users, setUsers] = useState<User[]>([]);
@@ -22,23 +21,18 @@ export default function TabTwoScreen() {
     }]
 
     useEffect(() => {
-        fetch('http://127.0.0.1:3007/api/register', {
-            method: 'POST'
-        }).then(response => {
-            console.warn( response);
-            console.log(response);
-        });
-    })
-    function getData() {
-        fetch('http://127.0.0.1:3007/api/register', {
-            method: 'POST'
-        }).then(response => {
+        reqUserList().then(response => {
+            console.log('121212');
             console.warn( response);
             console.log(response);
         })
-        .catch(error => {
-          console.error(error);
-        });
+    })
+    function getData() {
+        reqUserList().then(response => {
+            console.log('121212');
+            console.warn( response);
+            console.log(response);
+        })
     }
     return (
         <View style={styles.container}>
