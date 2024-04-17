@@ -1,21 +1,32 @@
-import { View, Text, FlatList, SafeAreaView, StyleSheet, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React, { useEffect } from 'react'
+import { FlatList, SafeAreaView, StyleSheet } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Message from '@/components/Message/Message'
 import MessageInput from '@/components/MessageInput';
 import ChartMessageData from '@/assets/data/Chat';
-import { useLocalSearchParams, router } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { useNavigation } from '@react-navigation/native';
+import { reqChatRoomMessageRecord } from '@/src/api/modules/chatRoom';
+import { message } from '@/src/types';
 
 export default function chatRoomScreen() {
-    const chatRoomId = useLocalSearchParams().id;
+    const [messageList, setMessageList] = useState<message[]>();
+    const chatRoomID = useLocalSearchParams().id;
     const navigation = useNavigation();
-    navigation.setOptions({ title: chatRoomId });
+    navigation.setOptions({ title: chatRoomID });
 
-    console.warn(chatRoomId, 'chatRoomId')
+    function getChartRoomRecords() {
+        reqChatRoomMessageRecord({
+            chatRoomID
+        }).then((res) => {
+            setMessageList(res.data.results);
+        })
+    }
+
+    useEffect(getChartRoomRecords, []);
     return (
         <SafeAreaView style={styles.contain}>
             <FlatList
-                data={ChartMessageData.messages}
+                data={messageList}
                 renderItem={({ item }) => <Message messages={item} />}
             />
             <MessageInput></MessageInput>

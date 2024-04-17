@@ -1,8 +1,9 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
+import { userID } from '@/src/store/dataStore';
 
 export default function Message({ messages }: any) {
-    const myId: string = 'u1';       // 后期要改
+    const myId: string = userID;       // 后期要改
     const isMyMessage: boolean = messages.user.id == myId;
     const bubbleStyle = isMyMessage ? styles.myBubble : styles.otherBubble;
     const textColor = isMyMessage ? 'white' : 'black';

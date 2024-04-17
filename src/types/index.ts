@@ -7,3 +7,21 @@ export interface User {
     sex: string,
     birthday: Date
 }
+
+export interface chatRoomItemType {
+    id: string,
+    users: Array<Object>,
+    lastMessage: Object,
+    newMessage: string
+}
+
+export interface message {
+    id: string,
+    content: string,
+    createdAt: string,
+    user: {
+        id: string,
+        name: string,
+        imageUri: string
+    }
+}

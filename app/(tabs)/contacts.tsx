@@ -2,45 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Button, View } from 'react-native';
 import { User } from '@/src/types';
 import UserItem from '@/components/UserItem';
-import { reqUserList } from '@/src/api/modules/user';
+import { reqFriendList, reqUserList } from '@/src/api/modules/user';
+import { userID } from '@/src/store/dataStore';
 
 export default function TabTwoScreen() {
     const [Users, setUsers] = useState<User[]>([]);
 
-    const usersData = [{
-        username: "12",
-        url: "https://randomuser.me/api/portraits/men/36.jpg"
-    },
-    {
-        username: "2",
-        url: "https://randomuser.me/api/portraits/men/36.jpg"
-    },
-    {
-        username: "3",
-        url: "https://randomuser.me/api/portraits/men/36.jpg"
-    }]
-
     useEffect(() => {
-        reqUserList().then(response => {
-            console.log('121212');
-            console.warn( response);
-            console.log(response);
+        reqFriendList({
+            userID: userID
+        }).then(response => {
+            setUsers(response.data.results);
         })
-    })
-    function getData() {
-        reqUserList().then(response => {
-            console.log('121212');
-            console.warn( response);
-            console.log(response);
-        })
-    }
+    }, [])
     return (
         <View style={styles.container}>
             <FlatList
-                data={usersData}
+                data={Users}
                 renderItem={({ item }) => <UserItem userItem={item} />}
             />
-            <Button title="点击" onPress={getData}/>
         </View>
     );
 }

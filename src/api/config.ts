@@ -1,1 +1,1 @@
-export const socketUrl = '/api';
+export const socketUrl = 'http://10.61.94.242:3007';

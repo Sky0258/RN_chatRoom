@@ -20,7 +20,7 @@ export default function ChartRoom({ chatRoom }: any) {
                     <Avatar
                         rounded
                         size={40}
-                        source={{ uri: user.imageUri }}
+                        source={{ uri: user.imgUrl }}
                     />
                     {chatRoom.newMessage && <Badge size={18} style={styles.badge}>{chatRoom.newMessage}</Badge>}
                 </View>
