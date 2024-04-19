@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import ChatRoomItem from '@/components/ChatRoomItem';
 import { reqChatRoomList, reqChatRoomUserList } from '@/src/api/modules/chatRoom';
-import { userID } from '@/src/store/dataStore';
+import { userInfo } from '@/src/store/dataStore';
 import { chatRoomItemType } from '@/src/types';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export default function TabOneScreen() {
     const [chatRoomList, setChatRoomList] = useState<chatRoomItemType[]>([]);
 
-    useEffect(getChatRoomList, []);
+    // 在当前页面获取焦点时更新数据
+    useFocusEffect(useCallback(() => {
+        getChatRoomList();
+    }, []));
+
     function getChatRoomList() {
         reqChatRoomList({
-            userID: userID
+            userID: userInfo.id
         }).then((res) => {
             const chatRoomList = formatData(res.data.results);
             chatRoomList.then(res => {

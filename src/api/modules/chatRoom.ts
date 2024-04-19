@@ -7,3 +7,6 @@ export const reqChatRoomUserList = (data: Object) => fetch('/chatRoom/getChatRoo
 
 // 获取聊天室聊天记录
 export const reqChatRoomMessageRecord = (data: Object) => fetch('/chatRoom/getChatRoomMessageRecord', { method: 'GET', params: data});
+
+// 发送消息
+export const reqAddChatRoomMessage = (data: Object) => fetch('/chatRoom/addChatRoomMessage', { method: 'POST', data});

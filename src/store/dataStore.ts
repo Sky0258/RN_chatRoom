@@ -1,11 +1,16 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { userInfoType } from "../types";
 
-let userID: string = '';
+let userInfo: userInfoType = {
+    id: "",
+    name: "",
+    imageUrl: ""
+};
 const storeData = async (key: string, value: string) => {
     try {
         await AsyncStorage.setItem(key, value);
-        if(key == 'userID') {
-            userID = value;
+        if(key == 'userInfo') {
+            userInfo = JSON.parse(value);
         }
     } catch (e) {
         console.error(e);
@@ -25,4 +30,4 @@ const getData = async (key: string) => {
     }
 };
 
-export { storeData, getData, userID }
+export { storeData, getData, userInfo }

@@ -3,14 +3,20 @@ import { ListItem, Avatar } from '@rneui/themed';
 import { Badge } from 'react-native-paper';
 import React from 'react'
 import { router } from 'expo-router';
+import { userInfo } from '@/src/store/dataStore';
 
 
 export default function ChartRoom({ chatRoom }: any) {
-    const user = chatRoom.users[1];
+    const user = chatRoom.users.find((item: any) => {
+        return userInfo.id != item.id;
+    });
+
     function handleItemPress() {
         router.push({
             pathname: "/(screen)/chatRoomScreen",
-            params: { id: chatRoom.id }
+            params: {
+                id: chatRoom.id,
+            }
         })
     }
     return (
@@ -20,13 +26,13 @@ export default function ChartRoom({ chatRoom }: any) {
                     <Avatar
                         rounded
                         size={40}
-                        source={{ uri: user.imgUrl }}
+                        source={{ uri: user.imageUrl }}
                     />
                     {chatRoom.newMessage && <Badge size={18} style={styles.badge}>{chatRoom.newMessage}</Badge>}
                 </View>
 
                 <ListItem.Content>
-                    <ListItem.Title>{user.name}</ListItem.Title>
+                    <ListItem.Title>{user.username}</ListItem.Title>
                     <ListItem.Subtitle>{chatRoom.lastMessage.content}</ListItem.Subtitle>
                 </ListItem.Content>
                 <ListItem.Content right>
@@ -43,8 +49,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: -5,
         top: -3,
-        backgroundColor: "#6750a5" 
+        backgroundColor: "#6750a5"
 
-        
+
     }
 })

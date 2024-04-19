@@ -22,6 +22,12 @@ export interface message {
     user: {
         id: string,
         name: string,
-        imageUri: string
+        imageUrl: string
     }
+}
+
+export interface userInfoType {
+    id: string,
+    name: string,
+    imageUrl: string
 }

@@ -3,14 +3,14 @@ import { FlatList, StyleSheet, Button, View } from 'react-native';
 import { User } from '@/src/types';
 import UserItem from '@/components/UserItem';
 import { reqFriendList, reqUserList } from '@/src/api/modules/user';
-import { userID } from '@/src/store/dataStore';
+import { userInfo } from '@/src/store/dataStore';
 
 export default function TabTwoScreen() {
     const [Users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
         reqFriendList({
-            userID: userID
+            userID: userInfo.id
         }).then(response => {
             setUsers(response.data.results);
         })

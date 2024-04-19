@@ -1,9 +1,9 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
-import { userID } from '@/src/store/dataStore';
+import { userInfo } from '@/src/store/dataStore';
 
-export default function Message({ messages }: any) {
-    const myId: string = userID;       // 后期要改
+export default function Message({ messages }: any) { 
+    const myId: string = userInfo.id;  
     const isMyMessage: boolean = messages.user.id == myId;
     const bubbleStyle = isMyMessage ? styles.myBubble : styles.otherBubble;
     const textColor = isMyMessage ? 'white' : 'black';
@@ -11,13 +11,13 @@ export default function Message({ messages }: any) {
 
     return (
         <View style={styles.bubbleContainer}>
-            {isMyMessage ? null : <Image source={{ uri: messages.user.imageUri }} style={styles.avatar} />}
+            {isMyMessage ? null : <Image source={{ uri: messages.user.imageUrl }} style={styles.avatar} />}
             <View style={[styles.messageContainer, isMyMessage ? styles.myMessageContainer : styles.otherMessageContainer]}>
                 <View style={[styles.bubble, bubbleStyle, { backgroundColor }]}>
                     <Text style={[styles.messageText, { color: textColor }]}>{messages.content}</Text>
                 </View>
             </View>
-            {isMyMessage ? <Image source={{ uri: messages.user.imageUri }} style={styles.avatar} /> : null}
+            {isMyMessage ? <Image source={{ uri: messages.user.imageUrl }} style={styles.avatar} /> : null}
         </View>
     );
 }
